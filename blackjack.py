@@ -116,7 +116,6 @@ class BlackjackTable():
             else:
                 self.hit_or_stand(player)
         # If s, continue without doing anything.
-        pass
 
     # Asks all players for their bet this round
     # sets .playing attribute to True
