@@ -170,6 +170,7 @@ def BlackJackInterface():
     b.reset_deck()
     all_players = []
     symbols = f"{chr(9827)} {chr(9830)} {chr(9829)} {chr(9824)} "
+    winning = False
 
 
     # Helper function to create a player
@@ -193,6 +194,16 @@ def BlackJackInterface():
         b.add_player(new_player)
 
     def add_to_table(b:BlackjackTable):
+        if all_players == []:
+            print("[Eerie whooshing noises can be heard in the distance]")
+            time.sleep(1)
+            print("It would seem that no one has ever been here")
+            time.sleep(1)
+            print("Only a lonely Dealer sitting in a large empty room")
+            time.sleep(1)
+            print("Perhaps you need to recriut someone first...")
+            time.sleep(1)
+            return
         playernames = [player.name for player in all_players]
         print("Players: "+ ' | '.join(playernames))
         player_choice = ''
@@ -203,13 +214,19 @@ def BlackJackInterface():
                 print(f"{player_choice} already has a seat at the table")
                 return
         b.p.append(all_players[playernames.index(player_choice)])
-        print(f"{player.choice} has been seated at the table")
+        print(f"{player_choice} has been seated at the table")
 
         # Show all players
         # ask to select player
         # Player will be added or says already at table
     
     def leave_table(b:BlackjackTable):
+        if b.p == []:
+            print("[Sound of crickets chirping]")
+            time.sleep(1)
+            print("There's no one but the Dealer at the table right now")
+            time.sleep(1)
+            return
         playernames = [pl.name for pl in b.p]
         print("Players: "+ ' | '.join(playernames))
         player_choice = ''
@@ -224,6 +241,12 @@ def BlackJackInterface():
     def view_table(b:BlackjackTable):
         playernames = [pl.name for pl in b.p]
         print("Dealer | "+ ' | '.join(playernames))
+        if playernames == None:
+            time.sleep(0.5)
+            print("The table stands empty.")
+            time.sleep(0.5)
+            print("The dealer looks lonely")
+            time.sleep(0.5)
 
     def pay_debt():
         for player in all_players:
@@ -231,14 +254,14 @@ def BlackJackInterface():
                 sub = min(player.debt, player.cash)
                 player.debt -= sub
                 player.cash -= sub
-            time.sleep(0.25)
+            time.sleep(0.5)
             print(player)    
     
     # MAIN LOOP TO KEEP GAME RUNNING
     while True:
         choice = "NA"
         while not choice in options:
-            choice = input(symbols*2 + f"BLACKJACK INTERFACE " + symbols*2
+            choice = input(symbols*2 + f"LETS PLAY BLACKJACK " + symbols*2
                               + "\n\t\t0: Play A Game"
                               + "\n1: Add New Player  2: Add To Table  "
                               + "3: Leave Table\n4: View Table  5: Pay Debts  "
@@ -264,19 +287,27 @@ def BlackJackInterface():
                       + "\nAdd a player before you start the game")
         if choice == '1':
             add_new_player(b)
+            print('')
         if choice == '2':
             add_to_table(b)
+            # time.sleep(1.5)
+            print('')
         if choice == '3':
             leave_table(b)
+            # time.sleep(1.5)
+            print('')
         if choice == '4':
             view_table(b)
+            # time.sleep(1.5)
+            print('')
         if choice == '5':
             print("Attempting to Pay Debts...")
             pay_debt()
-            time.sleep(1.5)
+            # time.sleep(1.5)
+            print('')
         if choice == '6':
             print("Viewing House Earnings...")
-            time.sleep(0.4)
+            # time.sleep(0.4)
             house = b.d.winnings
             if house > 0:
                 print(f"So far the house is up ${house}")
@@ -284,29 +315,51 @@ def BlackJackInterface():
                 print(f"So far the house is down ${house}")
             else:
                 print(f"The house is even for now")
-            time.sleep(1.5)
+            # time.sleep(1.5)
+            print('')
         if choice == '7':
             print("Viewing Player Wallets...")
             for player in all_players:
-                time.sleep(0.75)
+                # time.sleep(0.75)
                 print(player)
-            time.sleep(1.5)
+            # time.sleep(1.5)
             print('')
-        if choice == '8':
-            break
-        if choice == '9':
+        if choice == '8' or choice == '9':
+            if b.d.winnings < 0:
+                winning = True
             break
         choice = "NA"
-    time.sleep(3)
-    print("Goodbye")
-    time.sleep(1)
-    print("\nFor now at least...")
-    time.sleep(1)
-    print("When you're feeling lucky")
-    time.sleep(1)
-    print("You know where to find me")
-
-
+    if winning:
+        time.sleep(1)
+        print("Dealer: So you want to leave?")
+        time.sleep(1)
+        print("Do you want to run?")
+        time.sleep(1)
+        print("When we have only just met?")
+        time.sleep(1)
+        print("Oh no...")
+        time.sleep(1)
+        print("I can't let you go so easily")
+        time.sleep(1)
+        print("Especially not when I'm losing...")
+        time.sleep(1)
+        print("\nYou: Why am I so dizzy?")
+        time.sleep(1)
+        print("\nDealer: Sleep child... this was all just a dream...")
+        time.sleep(1)
+        print("[*snickers*] The house always wins...")
+    else:
+        time.sleep(1)
+        print("Dealer: Leaving already?")
+        time.sleep(1)
+        print("Thank you for playing")
+        time.sleep(1)
+        print("An invoice will be sent to you soon")
+        time.sleep(1)
+        print("And if you're ever feeling lucky")
+        time.sleep(1)
+        print("You know where to find me")
+        
 
 ###### TESTING #####
 if __name__ == "__main__":
