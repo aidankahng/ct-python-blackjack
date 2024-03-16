@@ -271,7 +271,7 @@ def BlackJackInterface():
         if choice == '4':
             view_table(b)
         if choice == '5':
-            print("Attempting to pay debts...")
+            print("Attempting to Pay Debts...")
             pay_debt()
             time.sleep(1.5)
         if choice == '6':
@@ -286,7 +286,7 @@ def BlackJackInterface():
                 print(f"The house is even for now")
             time.sleep(1.5)
         if choice == '7':
-            print("Viewing Player Wallets")
+            print("Viewing Player Wallets...")
             for player in all_players:
                 time.sleep(0.75)
                 print(player)
@@ -297,7 +297,14 @@ def BlackJackInterface():
         if choice == '9':
             break
         choice = "NA"
+    time.sleep(3)
     print("Goodbye")
+    time.sleep(1)
+    print("\nFor now at least...")
+    time.sleep(1)
+    print("When you're feeling lucky")
+    time.sleep(1)
+    print("You know where to find me")
 
 
 
