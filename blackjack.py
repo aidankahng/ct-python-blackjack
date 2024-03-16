@@ -287,27 +287,27 @@ def BlackJackInterface():
                       + "\nAdd a player before you start the game")
         if choice == '1':
             add_new_player(b)
-            print('')
+            print('Welcome In\n')
         if choice == '2':
             add_to_table(b)
-            # time.sleep(1.5)
+            time.sleep(1.5)
             print('')
         if choice == '3':
             leave_table(b)
-            # time.sleep(1.5)
+            time.sleep(1.5)
             print('')
         if choice == '4':
             view_table(b)
-            # time.sleep(1.5)
+            time.sleep(1.5)
             print('')
         if choice == '5':
             print("Attempting to Pay Debts...")
             pay_debt()
-            # time.sleep(1.5)
+            time.sleep(1.5)
             print('')
         if choice == '6':
             print("Viewing House Earnings...")
-            # time.sleep(0.4)
+            time.sleep(0.4)
             house = b.d.winnings
             if house > 0:
                 print(f"So far the house is up ${house}")
@@ -315,14 +315,14 @@ def BlackJackInterface():
                 print(f"So far the house is down ${house}")
             else:
                 print(f"The house is even for now")
-            # time.sleep(1.5)
+            time.sleep(1.5)
             print('')
         if choice == '7':
             print("Viewing Player Wallets...")
             for player in all_players:
-                # time.sleep(0.75)
+                time.sleep(0.75)
                 print(player)
-            # time.sleep(1.5)
+            time.sleep(1.5)
             print('')
         if choice == '8' or choice == '9':
             if b.d.winnings < 0:
