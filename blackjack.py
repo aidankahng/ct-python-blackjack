@@ -73,6 +73,7 @@ class BlackjackTable():
         if player in self.p:
             # ask for an input and validate if it is a valid input (int and less than player.cash)
             curr_bet = -1 # Initialized as an inappropriate value
+            time.sleep(0.5)
             input_bet = input(f"[{player.name}] Please place a bet for this round: $")
             curr_bet = self.check_bet_int(input_bet)
             while curr_bet < 0 or curr_bet > player.cash:
@@ -94,26 +95,39 @@ class BlackjackTable():
     
     # Dealer's automated turn
     def dealer_turn(self):
+        print("Dealer's Turn:")
         while self.d.bj_score() > 0 and self.d.bj_score() < 17:
+            time.sleep(1.5)
             print(f"Dealer Hit!")
             self.deal_to(self.d)
+            time.sleep(1.5)
             print(f"[Dealer] drew a {self.d.hand[-1]}")
         if self.d.bj_score() < 0:
+            time.sleep(1)
             print(f"Dealer BUSTED!")
+        else:
+            time.sleep(1.5)
+            print(f"Dealer Stood!")
             
     
     # Asks a player to make an action. Hit or Stand
     def hit_or_stand(self, player : Player):
+        time.sleep(0.5)
         print(player)
+        time.sleep(0.5)
         player_input = input(f"[{player.name}] would you like to (H)it or (S)tand? ").lower()
         while not (player_input.startswith('h') or player_input.startswith('s')):
             player_input = input(f"[{player.name}] Please enter h to hit, s to stand. ").lower()
         if player_input.startswith('h'):
+            time.sleep(0.5)
             print(f"[{player.name}] Hit!")
+            time.sleep(0.5)
             self.deal_to(player)
             print(f"[{player.name}] drew a {player.hand[-1]}")
+            time.sleep(0.5)
             if player.bj_score() < 0:
                 print(f"[{player.name}] BUSTED!")
+                time.sleep(0.5)
             else:
                 self.hit_or_stand(player)
         # If s, continue without doing anything.
@@ -126,7 +140,9 @@ class BlackjackTable():
         for player in self.p:
             self.collect_bet(player)
         self.playing = True
+        time.sleep(0.5)
         print("Dealing Cards...")
+        time.sleep(2)
         for i in range(2):
             for player in self.p:
                 self.deal_to(player)
@@ -280,16 +296,16 @@ def BlackJackInterface():
         if choice == '0':
             if b.p != []:
                 print("Shuffling Cards...")
-                time.sleep(0.4)
+                time.sleep(1)
                 b.reset_deck()
                 b.start_round()
                 print("Time to Play your Hands!")
-                time.sleep(0.4)
+                time.sleep(1)
                 b.play_game()
                 print("Calculating results...")
-                time.sleep(0.4)
+                time.sleep(1)
                 b.end_round()
-                time.sleep(2)
+                time.sleep(1.5)
             else:
                 print("There are no players at the table"
                       + "\nAdd a player before you start the game")
