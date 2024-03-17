@@ -95,13 +95,17 @@ class BlackjackTable():
     
     # Dealer's automated turn
     def dealer_turn(self):
+        self.d.unhide()
         print("Dealer's Turn:")
+        print(self.d)
         while self.d.bj_score() > 0 and self.d.bj_score() < 17:
             time.sleep(1.5)
             print(f"Dealer Hit!")
             self.deal_to(self.d)
             time.sleep(1.5)
             print(f"[Dealer] drew a {self.d.hand[-1]}")
+            time.sleep(1.5)
+            print(self.d)
         if self.d.bj_score() < 0:
             time.sleep(1)
             print(f"Dealer BUSTED!")
@@ -155,7 +159,6 @@ class BlackjackTable():
         self.dealer_turn()
 
     def end_round(self):
-        self.d.unhide()
         dealer_score = max(0, self.d.bj_score())
         print(self)
         # Now to compare each player's score with the dealer's score
