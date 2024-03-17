@@ -83,7 +83,7 @@ class BlackjackTable():
                 if curr_bet > player.cash:
                     print(f"You only have ${player.cash} in cash")
                     buy_in = input(f"Would you like to buy in the difference?(y/n) ").lower()
-                    if buy_in == 'y':
+                    if buy_in.startswith('y'):
                         player.debt += curr_bet - player.cash
                         player.cash = curr_bet
                     else:
@@ -174,13 +174,18 @@ def BlackJackInterface():
     winning = False
 
 
-    # Helper function to create a player
+    # Helper function to create a player, asking for user input
     def add_new_player(b:BlackjackTable):
-        name = ""
+        name = ''
         wealth = 0
         debt = 0
-        while name == "":
-            name = input("What is the name of our new player? ").title()
+        while name == '':
+            name = input("What is the name of our new player? ").strip().title()
+            # Check if name is already at the table to avoid bugs with duplicate names
+            if len(b.p) != 0:
+                if name in [pl.name for pl in b.p]:
+                    print(f"{name} is already here. Please use a unique name.")
+                    name = ''
         wealth_input = input(f"How much money did {name} bring today?"
                              + "\n Default is $0"
                              + "\n::")
@@ -192,6 +197,10 @@ def BlackJackInterface():
         all_players.append(new_player)
         b.add_player(new_player)
 
+    # Shows unseated players
+    # Asks to select a player
+    # That player will be added to the table
+    # KNOWN BUG: if two players have same name, can only select the first player of that name
     def add_to_table(b:BlackjackTable):
         if all_players == []:
             print("[Eerie whooshing noises can be heard in the distance]")
@@ -200,25 +209,25 @@ def BlackJackInterface():
             time.sleep(1)
             print("Only a lonely Dealer sitting in a large empty room")
             time.sleep(1)
-            print("Perhaps you need to recriut someone first...")
+            print("Perhaps you need to recruit someone first...")
             time.sleep(1)
             return
         playernames = [player.name for player in all_players]
-        print("Players: "+ ' | '.join(playernames))
-        player_choice = ''
-        while not player_choice in playernames:
-            player_choice = input("Which player would you like to add? ").title()
-        for pl in b.p:
-            if pl.name == player_choice:
-                print(f"{player_choice} already has a seat at the table")
-                return
-        b.p.append(all_players[playernames.index(player_choice)])
-        print(f"{player_choice} has been seated at the table")
-
-        # Show all players
-        # ask to select player
-        # Player will be added or says already at table
+        seatedplayers = [pl.name for pl in b.p]
+        unseated = [name for name in playernames if not name in seatedplayers]
+        if unseated:
+            print("Unseated Players: "+ ' | '.join(unseated))
+            player_choice = ''
+            while not player_choice in unseated:
+                player_choice = input("Which player would you like to add? ").strip().title()
+            b.p.append(all_players[playernames.index(player_choice)])
+            print(f"{player_choice} has been seated at the table")
+        else:
+            print("All players are already seated")
     
+    # Show players at table
+    # ask to select player
+    # Player will be removed
     def leave_table(b:BlackjackTable):
         if b.p == []:
             print("[Sound of crickets chirping]")
@@ -230,13 +239,11 @@ def BlackJackInterface():
         print("Players: "+ ' | '.join(playernames))
         player_choice = ''
         while not player_choice in playernames:
-            player_choice = input("Which player would like to leave the table? ").title()
+            player_choice = input("Which player would like to leave the table? ").strip().title()
         b.p.pop(playernames.index(player_choice))
         print(f"{player_choice} has left the table")
-        # Show players at table
-        # ask to select player
-        # Player will be removed
     
+    # Displays the Dealer and all players currently seated
     def view_table(b:BlackjackTable):
         playernames = [pl.name for pl in b.p]
         print("Dealer | "+ ' | '.join(playernames))
@@ -247,6 +254,7 @@ def BlackJackInterface():
             print("The dealer looks lonely")
             time.sleep(0.5)
 
+    # Attempts to pay off as much debt as possible for all players
     def pay_debt():
         for player in all_players:
             if player.debt > 0:
