@@ -311,7 +311,7 @@ def BlackJackInterface():
             if house > 0:
                 print(f"So far the house is up ${house}")
             elif house < 0:
-                print(f"So far the house is down ${house}")
+                print(f"So far the house is down -${abs(house)}")
             else:
                 print(f"The house is even for now")
             time.sleep(1.5)

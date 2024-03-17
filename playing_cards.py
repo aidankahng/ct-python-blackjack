@@ -4,7 +4,7 @@ from random import shuffle
 # each card has a displayed name and a black_jack value
 class Card:
     card_dict = {
-        '1' : ['Ace', 11],
+        '1' : ['A', 11],
         '2' : ['2', 2],
         '3' : ['3', 3],
         '4' : ['4', 4],
@@ -14,9 +14,9 @@ class Card:
         '8' : ['8', 8],
         '9' : ['9', 9],
         '10' : ['10', 10],
-        '11' : ['Jack', 10],
-        '12' : ['Queen', 10],
-        '13' : ['King', 10]
+        '11' : ['J', 10],
+        '12' : ['Q', 10],
+        '13' : ['K', 10]
     }
     suit_dict = {
         '1' : chr(9827),
