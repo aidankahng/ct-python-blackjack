@@ -166,7 +166,7 @@ class BlackjackTable():
 # Function to display friendly interfaces            
 def BlackJackInterface():
     # Defining some variables
-    options = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0'}
+    options = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '?'}
     b = BlackjackTable()
     b.reset_deck()
     all_players = []
@@ -274,6 +274,7 @@ def BlackJackInterface():
                               + "3: Leave Table\n4: View Table  5: Pay Debts  "
                               + "6: View House Earnings  "
                               + "\n7: View Player Wallets  8/9: Quit"
+                              + "\nEnter '?' to learn how to play"
                               + '\n::')
         print(symbols * 6)
         if choice == '0':
@@ -331,6 +332,46 @@ def BlackJackInterface():
                 print(player)
             time.sleep(1.5)
             print('')
+        if choice == '?':
+            print("""
+        Welcome to Blackjack!
+    Blackjack is an incredibly popular, exciting and easy card game to play. 
+    The object is to have a hand with a total value higher than the dealer's without going over 21. 
+    Kings, Queens, Jacks and Tens are worth a value of 10. 
+    An Ace has the value of 1 or 11. 
+    The remaining cards are counted at face value.
+""")
+            input("Press Enter to continue...")
+            print("""
+    To start each round, all players must make a bet
+    Then, 2 cards will be dealt to each player including the dealer
+    However, one of the dealer's cards will be face down (hidden from view)   
+""")
+            input("Press Enter to continue...")
+            print("""
+    On your turn, you have a choice to Hit or Stand
+    Hit: You will get a new card face up
+    Stand: Your current hand is final and you end your turn
+    If your total value ever goes over 21, you 'Bust' and LOSE
+""")
+            input("Press Enter to continue...")
+            print("""
+    On the dealer's turn they will Hit if their total value is < 17
+    and Stand whenever their value is 17 or greater
+    The dealer can also bust if their score goes over 21
+""")
+            input("Press Enter to continue...")
+            print("""
+    Special rule: Blackjack
+    If your first 2 cards add up to 21 exactly you have a blackjack!
+    Unless the dealer also has a blackjack you earn 1.5 times your bet
+    
+    Normal wins will earn the same as your bet
+    All losses will lose your bet
+                  
+I hope this explanation helps you get started! Have fun!
+""")
+            input("Press Enter to return to the menu\n")
         if choice == '8' or choice == '9':
             if b.d.winnings < 0:
                 winning = True
