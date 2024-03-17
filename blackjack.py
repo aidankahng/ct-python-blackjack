@@ -1,15 +1,10 @@
-# ## Python Blackjack
-# For this project you will make a Blackjack game using Python. Click <a href="http://www.hitorstand.net/strategy.php">here</a> to familiarize yourself with the the rules of the game. You won't be implementing every rule "down to the letter" with the game, but we will doing a simpler version of the game. This assignment will be given to further test your knowledge on object-oriented programming concepts.
-# ### Rules:
-# `1. ` The game will have two players: the Dealer and the Player. The game will start off with a deck of 52 cards. The 52 cards will consist of 4 different suits: Clubs, Diamonds, Hearts and Spades. For each suit, there will be cards numbered 1 through 13. <br>
-# **Note: No wildcards will be used in the program**
-# `2. ` When the game begins, the dealer will shuffle the deck of cards, making them randomized. After the dealer shuffles, it will deal the player 2 cards and will deal itself 2 cards from. The Player should be able to see both of their own cards, but should only be able to see one of the Dealer's cards.
-# `3. ` The objective of the game is for the Player to count their cards after they're dealt. If they're not satisfied with the number, they have the ability to 'Hit'. A hit allows the dealer to deal the Player one additional card. The Player can hit as many times as they'd like as long as they don't 'Bust'. A bust is when the Player is dealt cards that total more than 21.
-# `4. ` If the dealer deals the Player cards equal to 21 on the **first** deal, the Player wins. This is referred to as Blackjack. Blackjack is **NOT** the same as getting cards that equal up to 21 after the first deal. Blackjack can only be attained on the first deal.
-# `5. ` The Player will never see the Dealer's hand until the Player chooses to 'stand'. A Stand is when the player tells the dealer to not deal it anymore cards. Once the player chooses to Stand, the Player and the Dealer will compare their hands. Whoever has the higher number wins. Keep in mind that the Dealer can also bust. 
+# Python implemented blackjack game through commandline
+# Supports having multiple players, tracks winnings
+# Can also modify number of decks and have players sit out of games
+# 
 import time
 from playing_cards import Deck
-from people import Person, Player, Dealer
+from people import Player, Dealer
 import re
 
 
@@ -201,8 +196,8 @@ def BlackJackInterface():
         while name == '':
             name = input("What is the name of our new player? ").strip().title()
             # Check if name is already at the table to avoid bugs with duplicate names
-            if len(b.p) != 0:
-                if name in [pl.name for pl in b.p]:
+            if len(all_players) != 0:
+                if name in [pl.name for pl in all_players]:
                     print(f"{name} is already here. Please use a unique name.")
                     name = ''
         wealth_input = input(f"How much money did {name} bring today?"
@@ -292,7 +287,7 @@ def BlackJackInterface():
                               + "\n1: Add New Player  2: Add To Table  "
                               + "3: Leave Table\n4: View Table  5: Pay Debts  "
                               + "6: View House Earnings  "
-                              + "\n7: View Player Wallets  8/9: Quit"
+                              + "\n7: View Player Wallets  8: Change Decks  9: QUIT"
                               + "\nEnter '?' to learn how to play"
                               + '\n::')
         print(symbols * 6)
@@ -312,27 +307,27 @@ def BlackJackInterface():
             else:
                 print("There are no players at the table"
                       + "\nAdd a player before you start the game")
-        if choice == '1':
+        elif choice == '1':
             add_new_player(b)
             print('Welcome In\n')
-        if choice == '2':
+        elif choice == '2':
             add_to_table(b)
             time.sleep(1.5)
             print('')
-        if choice == '3':
+        elif choice == '3':
             leave_table(b)
             time.sleep(1.5)
             print('')
-        if choice == '4':
+        elif choice == '4':
             view_table(b)
             time.sleep(1.5)
             print('')
-        if choice == '5':
+        elif choice == '5':
             print("Attempting to Pay Debts...")
             pay_debt()
             time.sleep(1.5)
             print('')
-        if choice == '6':
+        elif choice == '6':
             print("Viewing House Earnings...")
             time.sleep(0.4)
             house = b.d.winnings
@@ -344,13 +339,24 @@ def BlackJackInterface():
                 print(f"The house is even for now")
             time.sleep(1.5)
             print('')
-        if choice == '7':
+        elif choice == '7':
             print("Viewing Player Wallets...")
             for player in all_players:
                 time.sleep(0.75)
                 print(player)
             time.sleep(1.5)
             print('')
+        elif choice == '8':
+            decks_input = 'NA'
+            while not decks_input.isdigit():
+                decks_input = input("How many decks would you like to play with?" 
+                                + "(default = 2)\n::").strip()
+            b.deck = Deck(int(decks_input))
+            print(f"The game is now using {decks_input} decks of cards")
+        if choice == '9':
+            if b.d.winnings < 0:
+                winning = True
+            break
         if choice == '?':
             print("""
         Welcome to Blackjack!
@@ -391,10 +397,6 @@ def BlackJackInterface():
 I hope this explanation helps you get started! Have fun!
 """)
             input("Press Enter to return to the menu\n")
-        if choice == '8' or choice == '9':
-            if b.d.winnings < 0:
-                winning = True
-            break
         choice = "NA"
     if winning:
         print("Enjoy your winnings!")
