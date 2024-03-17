@@ -87,6 +87,7 @@ class BlackjackTable():
                         player.debt += curr_bet - player.cash
                         player.cash = curr_bet
                     else:
+                        print("Let's try this again")
                         curr_bet = -1
             player.cash -= curr_bet
             player.bet = curr_bet
@@ -176,8 +177,8 @@ def BlackJackInterface():
     # Helper function to create a player
     def add_new_player(b:BlackjackTable):
         name = ""
-        wealth = 100
-        debt = 100
+        wealth = 0
+        debt = 0
         while name == "":
             name = input("What is the name of our new player? ").title()
         wealth_input = input(f"How much money did {name} bring today?"
@@ -185,8 +186,6 @@ def BlackJackInterface():
                              + "\n::")
         if wealth_input.isdigit():
             wealth = int(wealth_input)
-            if wealth > 0:
-                debt = 0
         print(f"Player {name} has been added to the table "
               + f"starting with ${wealth}")
         new_player = Player(name, wealth, debt)
@@ -241,7 +240,7 @@ def BlackJackInterface():
     def view_table(b:BlackjackTable):
         playernames = [pl.name for pl in b.p]
         print("Dealer | "+ ' | '.join(playernames))
-        if playernames == None:
+        if b.p == []:
             time.sleep(0.5)
             print("The table stands empty.")
             time.sleep(0.5)
@@ -270,7 +269,7 @@ def BlackJackInterface():
                               + '\n::')
         print(symbols * 6)
         if choice == '0':
-            if all_players != []:
+            if b.p != []:
                 print("Shuffling Cards...")
                 time.sleep(0.4)
                 b.reset_deck()
@@ -330,35 +329,37 @@ def BlackJackInterface():
             break
         choice = "NA"
     if winning:
-        time.sleep(1)
-        print("Dealer: So you want to leave?")
-        time.sleep(1)
-        print("Do you want to run?")
-        time.sleep(1)
-        print("When we have only just met?")
-        time.sleep(1)
-        print("Oh no...")
-        time.sleep(1)
-        print("I can't let you go so easily")
-        time.sleep(1)
-        print("Especially not when I'm losing...")
-        time.sleep(1)
-        print("\nYou: Why am I so dizzy?")
-        time.sleep(1)
-        print("\nDealer: Sleep child... this was all just a dream...")
-        time.sleep(1)
-        print("[*snickers*] The house always wins...")
+        print("Enjoy your winnings!")
+        # time.sleep(1)
+        # print("Dealer: So you want to leave?")
+        # time.sleep(1)
+        # print("Do you want to run?")
+        # time.sleep(1)
+        # print("When we have only just met?")
+        # time.sleep(1)
+        # print("Oh no...")
+        # time.sleep(1)
+        # print("I can't let you go so easily")
+        # time.sleep(1)
+        # print("Especially not when I'm losing...")
+        # time.sleep(1)
+        # print("\nYou: Why am I so dizzy?")
+        # time.sleep(1)
+        # print("\nDealer: Sleep child... this was all just a dream...")
+        # time.sleep(1)
+        # print("The house always wins...")
     else:
-        time.sleep(1)
-        print("Dealer: Leaving already?")
-        time.sleep(1)
-        print("Thank you for playing")
-        time.sleep(1)
-        print("An invoice will be sent to you soon")
-        time.sleep(1)
-        print("And if you're ever feeling lucky")
-        time.sleep(1)
-        print("You know where to find me")
+        print("Goodbye! Maybe next time you'll earn a profit!")
+        # time.sleep(1)
+        # print("Dealer: Leaving already?")
+        # time.sleep(1)
+        # print("Thank you for playing")
+        # time.sleep(1)
+        # print("An invoice will be sent to you soon")
+        # time.sleep(1)
+        # print("And if you're ever feeling lucky")
+        # time.sleep(1)
+        # print("You know where to find me")
         
 
 ###### TESTING #####

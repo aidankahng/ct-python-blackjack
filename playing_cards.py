@@ -4,7 +4,7 @@ from random import shuffle
 # each card has a displayed name and a black_jack value
 class Card:
     card_dict = {
-        '1' : ['ace', 11],
+        '1' : ['Ace', 11],
         '2' : ['2', 2],
         '3' : ['3', 3],
         '4' : ['4', 4],
@@ -14,9 +14,9 @@ class Card:
         '8' : ['8', 8],
         '9' : ['9', 9],
         '10' : ['10', 10],
-        '11' : ['jack', 10],
-        '12' : ['queen', 10],
-        '13' : ['king', 10]
+        '11' : ['Jack', 10],
+        '12' : ['Queen', 10],
+        '13' : ['King', 10]
     }
     suit_dict = {
         '1' : chr(9827),
@@ -28,7 +28,7 @@ class Card:
         c = Card.card_dict[str(rank)]
         self.suit = Card.suit_dict[str(suit_val)]
         self.rank = c[0]
-        self.name = self.rank + ' of ' + self.suit
+        self.name = self.rank + self.suit
         self.bjval = c[1]
     
     def __str__(self) -> str:

@@ -19,7 +19,7 @@ class Person:
         ace_count = 0
         for card in self.hand:
             total_score += card.bjval
-            if card.rank == 'ace':
+            if card.rank == 'Ace':
                 ace_count += 1
         while total_score > 21 and ace_count > 0: # If busting, check aces to lower score
             total_score -= 10
